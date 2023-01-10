@@ -1,6 +1,5 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 
 const {
   UserModel,
@@ -8,27 +7,20 @@ const {
   validLogin,
   genToken,
 } = require("../models/userModel");
+
+const { authRoken } = require("../auth/authToken");
 const router = express.Router();
 
 router.get("/", (req, res) => {
   res.json({ msg: "users work" });
 });
 
-router.get("/userInfo", async (req, res) => {
-  let token = req.header("x-api-key");
-  if (!token) {
-    return res.status(401).json({ msg: "You must send token" });
-  }
-  try {
-    let decodeToken = jwt.verify(token, "TRON1234");
-    let user = await UserModel.findOne(
-      { _id: decodeToken.id },
-      { password: 0 }
-    );
-    res.json(user);
-  } catch (err) {
-    res.status(401).json({ msg: "token invalid or expired" });
-  }
+router.get("/userInfo", authRoken, async (req, res) => {
+  let user = await UserModel.findOne(
+    { _id: req.tokenData.id },
+    { password: 0 }
+  );
+  res.json(user);
 });
 
 router.post("/", async (req, res) => {
