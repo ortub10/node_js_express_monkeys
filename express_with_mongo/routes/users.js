@@ -1,6 +1,11 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
-const { UserModel, validUser, validLogin } = require("../models/userModel");
+const {
+  UserModel,
+  validUser,
+  validLogin,
+  genToken,
+} = require("../models/userModel");
 const router = express.Router();
 
 router.get("/", (req, res) => {
@@ -43,6 +48,7 @@ router.post("/login", async (req, res) => {
   if (!passwordValid) {
     return res.status(401).json({ msg: "Password wrong" });
   }
-  res.json({ msg: "All good, need to send you token" });
+  let newToken = genToken(user._id);
+  res.json({ token: newToken });
 });
 module.exports = router;
