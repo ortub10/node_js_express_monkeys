@@ -26,3 +26,12 @@ exports.validUser = (_bodyData) => {
 
   return joiSchema.validate(_bodyData);
 };
+
+exports.validLogin = (_bodyData) => {
+  let joiSchema = Joi.object({
+    email: Joi.string().min(2).max(200).required().email(),
+    password: Joi.string().min(3).max(100).required(),
+  });
+
+  return joiSchema.validate(_bodyData);
+};
