@@ -1,5 +1,5 @@
 const express = require("express");
-const { FoodModel } = require("../models/foodModel");
+const { FoodModel, validFood } = require("../models/foodModel");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
@@ -8,7 +8,10 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  //for checking, the post will return data it get
+  let validBody = validFood(req.body);
+  if (validBody.error) {
+    return res.status(400).json(validBody.error.details);
+  }
   let food = new FoodModel(req.body);
   await food.save();
   res.json(food);
