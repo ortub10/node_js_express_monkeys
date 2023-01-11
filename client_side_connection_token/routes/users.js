@@ -14,6 +14,11 @@ router.get("/", async (req, res) => {
   res.json({ msg: "users endpoint work" });
 });
 
+router.get("/userInfo", auth, async (req, res) => {
+  let user = await UserModel.find({ _id: req.tokenData._id }, { password: 0 });
+  res.json(user);
+});
+
 router.post("/", async (req, res) => {
   let valdiateBody = userValid(req.body);
   if (valdiateBody.error) {
