@@ -43,6 +43,24 @@ const doPostApi = async (_body) => {
     alert("There is problem try again later");
   }
 };
+
+const doDelApi = async (_idDel) => {
+  const url = `http://localhost:3020/foods/${_idDel}`;
+  try {
+    let resp = await axios({
+      url,
+      method: "DELETE",
+    });
+
+    if (resp.data.deletedCount == 1) {
+      doApi();
+    }
+  } catch (err) {
+    console.log(err);
+    alert("There is problem try again later");
+  }
+};
+
 const doApi = async () => {
   try {
     const url = "http://localhost:3020/foods";
@@ -59,8 +77,15 @@ const createFoodList = (_ar) => {
   document.querySelector("#id_list").innerHTML = "";
   _ar.forEach((item) => {
     const li = document.createElement("li");
-    li.innerHTML = `<li>${item.name} - ${item.price} nis</li>`;
+    li.className = "my-1";
+    li.innerHTML = `<button class="btn btn-danger x-btn">X</button>  ${item.name} - ${item.price} nis`;
     document.querySelector("#id_list").append(li);
+    let delBtn = li.querySelector(".x-btn");
+    delBtn.addEventListener("click", () => {
+      if (window.confirm("Are you sure you want to delete")) {
+        doDelApi(item._id);
+      }
+    });
   });
 };
 init();
