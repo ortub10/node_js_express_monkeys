@@ -25,6 +25,8 @@ const declareEvents = () => {
       .then((data) => {
         console.log(data);
         if (data.token) {
+          localStorage.setItem("tok", data.token);
+          window.location.href = "userInfo.html";
         } else {
           alert("User or password wrong");
         }
