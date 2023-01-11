@@ -34,7 +34,7 @@ router.post("/", async (req, res) => {
     console.log(err);
     res
       .status(400)
-      .json({ err: "Email already in system or there anothe problem" });
+      .json({ err: "Email already in system or there another problem" });
   }
 });
 
@@ -51,7 +51,7 @@ router.post("/login", async (req, res) => {
 
   let passValid = await bcrypt.compare(req.body.pass, user.pass);
   if (!passValid) {
-    return res.status(401).json({ msg: "Password worng" });
+    return res.status(401).json({ msg: "Password wrong" });
   }
 
   let newToken = genToken(user._id);
