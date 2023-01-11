@@ -16,11 +16,20 @@
   </head>
   <body>
     <div class="container">
+      <h2>Form add new food</h2>
+      <form id="id_form" class="col-md-6 shadow p-3 my-3">
+        <label>Name: </label>
+        <input id="id_name" type="text" class="form-control" />
+        <label>Calories: </label>
+        <input id="id_cals" type="number" class="form-control" />
+        <label>Price: </label>
+        <input id="id_price" type="number" class="form-control" />
+        <label>Img url: </label>
+        <input id="id_img" type="text" class="form-control" />
+        <button class="btn btn-dark mt-3">Add</button>
+      </form>
       <h2>List of food</h2>
-      <ul id="id_list">
-        <li>pizza - 60 nis</li>
-        <li>pasta - 40 nis</li>
-      </ul>
+      <ul id="id_list"></ul>
     </div>
   </body>
 </html>
