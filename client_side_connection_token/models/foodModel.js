@@ -10,7 +10,7 @@ const foodSchema = new mongoose.Schema({
   user_id: String,
 });
 
-exports.FoodModel = new mongoose.model("foods", foodSchema);
+exports.FoodModel = mongoose.model("foods", foodSchema);
 
 exports.validateFood = (reqBody) => {
   let joiSchema = Joi.object({

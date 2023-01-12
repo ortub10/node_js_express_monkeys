@@ -23,11 +23,24 @@ router.post("/", auth, async (req, res) => {
     let food = new FoodModel(req.body);
     food.user_id = req.tokenData._id;
     await food.save();
-    res.json(food);
+    res.status(201).json(food);
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
   }
 });
 
+router.delete("/:idDel", auth, async (req, res) => {
+  try {
+    let idDel = req.params.idDel;
+    let data = await FoodModel.deleteOne({
+      _id: idDel,
+      user_id: req.tokenData._id,
+    });
+    res.json(data);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
 module.exports = router;
