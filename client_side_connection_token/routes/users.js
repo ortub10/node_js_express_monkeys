@@ -59,7 +59,7 @@ router.post("/login", async (req, res) => {
     if (!validPassword) {
       return res.status(401).json({ msg: "User and password not match 2" });
     }
-    let token = createToken(user._id);
+    let token = createToken(user._id, user.role);
     res.json({ token });
   } catch (err) {
     console.log(err);

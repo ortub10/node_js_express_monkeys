@@ -11,11 +11,17 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
+  role: {
+    type: String,
+    default: "user",
+  },
 });
 exports.UserModel = mongoose.model("users", userSchema);
 
-exports.createToken = (_id) => {
-  let token = jwt.sign({ _id }, config.tokenSecret, { expiresIn: "60mins" });
+exports.createToken = (_id, role) => {
+  let token = jwt.sign({ _id, role }, config.tokenSecret, {
+    expiresIn: "60mins",
+  });
   return token;
 };
 
